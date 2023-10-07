@@ -1,4 +1,4 @@
-package com.example.chessgame.validation.util;
+package com.example.chessgame.game.util;
 
 public enum GameState {
     CONTINUES,

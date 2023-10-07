@@ -1,9 +1,9 @@
-package com.example.chessgame.validation.peaces;
+package com.example.chessgame.game.pieces;
 
-import com.example.chessgame.validation.Board;
-import com.example.chessgame.validation.util.Color;
-import com.example.chessgame.validation.util.Move;
-import com.example.chessgame.validation.util.Point;
+import com.example.chessgame.game.Board;
+import com.example.chessgame.game.util.Color;
+import com.example.chessgame.game.util.Move;
+import com.example.chessgame.game.util.Point;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -27,8 +27,9 @@ public abstract class Piece {
     public abstract void calculateAllLegalSquares();
 
     private boolean isLegalMove(Move move) {
+        calculateAllLegalSquares();
         if (move == null || move.getPieceType() != this.getClass()) return false;
-        return legalSquares.stream().anyMatch(p -> p.x == xp && p.y == yp);
+        return legalSquares.stream().anyMatch(p -> p.x == move.getTo().x && p.y == move.getTo().y);
     }
 
     public void filterSafeMoves() {
@@ -85,25 +86,24 @@ public abstract class Piece {
         return king;
     }
 
-
-    private boolean theSamePosition(int x, int y) {
-        return this.xp == x && this.yp == y;
+    private boolean theSamePosition(Move move) {
+        return move.getFrom().equals(move.getTo());
     }
 
     public boolean move(Move move) {
         int xp = move.getTo().x;
         int yp = move.getTo().y;
-        if (isLegalMove(move) && !theSamePosition(xp, yp) && this.color == board.moveFor()) {
+        if (isLegalMove(move) && !theSamePosition(move) && this.color == board.moveFor()) {
             if (getPiece(xp, yp) != null) {
                 if (getPiece(xp, yp).color != color) {
                     getPiece(xp, yp).kill();
                 }
             }
-            board.addMove(new Move(this.getClass(), new Point(this.xp, this.yp), new Point(xp, yp)));
+            board.addMove(move);
             this.xp = xp;
             this.yp = yp;
             legalSquares.clear();
-            board.toggleMove();
+            board.toggleMoveSide();
             return true;
         }
         return false;
@@ -116,6 +116,16 @@ public abstract class Piece {
             }
         }
         return null;
+    }
+
+    public List<Point> getAllEnemyLegalSquares() {
+        List<Point> squares = new ArrayList<>();
+        List<Piece> pieces = board.getAllPieces().stream().filter(p -> p.color != this.color).toList();
+        for(Piece p : pieces){
+            p.calculateAllLegalSquares();
+            squares.addAll(p.legalSquares);
+        }
+        return squares;
     }
 
     public void kill() {

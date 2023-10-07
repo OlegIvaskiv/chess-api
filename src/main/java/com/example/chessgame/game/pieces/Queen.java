@@ -1,7 +1,7 @@
-package com.example.chessgame.validation.peaces;
+package com.example.chessgame.game.pieces;
 
-import com.example.chessgame.validation.Board;
-import com.example.chessgame.validation.util.Color;
+import com.example.chessgame.game.Board;
+import com.example.chessgame.game.util.Color;
 
 public class Queen extends Piece {
     private final Bishop bishop;

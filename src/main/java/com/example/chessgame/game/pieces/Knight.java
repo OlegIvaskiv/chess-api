@@ -1,8 +1,8 @@
-package com.example.chessgame.validation.peaces;
+package com.example.chessgame.game.pieces;
 
-import com.example.chessgame.validation.Board;
-import com.example.chessgame.validation.util.Color;
-import com.example.chessgame.validation.util.Point;
+import com.example.chessgame.game.Board;
+import com.example.chessgame.game.util.Color;
+import com.example.chessgame.game.util.Point;
 
 import java.util.ArrayList;
 import java.util.List;

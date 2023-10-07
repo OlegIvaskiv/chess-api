@@ -1,4 +1,4 @@
-package com.example.chessgame.validation.util;
+package com.example.chessgame.game.util;
 
 import java.util.Objects;
 
@@ -9,6 +9,11 @@ public class Point {
     public Point(int x, int y) {
         this.x = x;
         this.y = y;
+    }
+
+    public Point(File file, Row row) {
+        this.x = file.x;
+        this.y = row.y;
     }
 
     @Override

@@ -1,21 +1,24 @@
-package com.example.chessgame.validation;
+package com.example.chessgame.game;
 
-import com.example.chessgame.validation.peaces.Piece;
-import com.example.chessgame.validation.util.Color;
-import com.example.chessgame.validation.util.Move;
+import com.example.chessgame.game.pieces.Piece;
+import com.example.chessgame.game.util.Color;
+import com.example.chessgame.game.util.Move;
 
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
 
-import static com.example.chessgame.validation.util.Color.BLACK;
-import static com.example.chessgame.validation.util.Color.WHITE;
+import static com.example.chessgame.game.util.Color.BLACK;
+import static com.example.chessgame.game.util.Color.WHITE;
 
 public class Board {
     private int checkMate = 0;
-    private static Color moveFor;
+    private Color moveFor = WHITE;
     private final Stack<Move> moves = new Stack<>();
     private final LinkedList<Piece> pieces = new LinkedList<>();
+
+    public Board() {
+    }
 
     public void addMove(Move move) {
         moves.push(move);
@@ -43,6 +46,9 @@ public class Board {
     }
 
     public Move getLastMove() {
+        if (moves.size() == 0) {
+            return null;
+        }
         return moves.peek();
     }
 
@@ -54,7 +60,7 @@ public class Board {
         return moveFor;
     }
 
-    public void toggleMove() {
+    public void toggleMoveSide() {
         moveFor = moveFor == WHITE ? BLACK : WHITE;
     }
 

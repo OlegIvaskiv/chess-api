@@ -1,9 +1,9 @@
-package com.example.chessgame.validation.peaces;
+package com.example.chessgame.game.pieces;
 
-import com.example.chessgame.validation.Board;
-import com.example.chessgame.validation.util.Color;
-import com.example.chessgame.validation.util.Move;
-import com.example.chessgame.validation.util.Point;
+import com.example.chessgame.game.Board;
+import com.example.chessgame.game.util.Color;
+import com.example.chessgame.game.util.Move;
+import com.example.chessgame.game.util.Point;
 
 public class Pawn extends Piece {
     public Pawn(int file, int row, Color color, Board board) {
@@ -15,7 +15,6 @@ public class Pawn extends Piece {
         legalSquares.clear();
         enPassantChecking();
         if (color == Color.WHITE) {
-            // start position
             if (yp == 6) {
                 if (getPiece(xp, yp - 2) == null) {
                     legalSquares.add(new Point(xp, yp - 2));
@@ -35,7 +34,6 @@ public class Pawn extends Piece {
                 }
             }
         } else {
-            // start position
             if (yp == 1) {
                 if (getPiece(xp, yp + 2) == null) {
                     legalSquares.add(new Point(xp, (yp + 2)));
@@ -60,6 +58,7 @@ public class Pawn extends Piece {
 
     private void enPassantChecking() {
         Move prevMove = board.getLastMove();
+        if (prevMove == null) return;
         if (color == Color.BLACK && yp == 4) {
             if (prevMove.getPieceType() == Pawn.class &&
                     prevMove.getFrom().x == xp - 1
