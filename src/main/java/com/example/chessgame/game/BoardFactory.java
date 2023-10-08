@@ -3,8 +3,6 @@ package com.example.chessgame.game;
 import com.example.chessgame.game.pieces.*;
 import com.example.chessgame.game.util.Color;
 
-import java.util.Arrays;
-
 import static com.example.chessgame.game.util.Color.BLACK;
 import static com.example.chessgame.game.util.Color.WHITE;
 import static java.lang.Character.isLowerCase;
@@ -26,7 +24,6 @@ public class BoardFactory {
 
     private static void setUpCustomPosition(String position, Board board) {
         String[] rows = position.split("/");
-        System.out.println(Arrays.toString(rows));
         rows[7] = rows[7].split(" ")[0];
         for (int i = 0; i < rows.length; i++) {
             String currRow = rows[i];

@@ -109,6 +109,7 @@ public class GameTest {
                 B, _2, now()));
         assertEquals(DRAW, moveResult);
     }
+
     @Test
     public void draw1() {
         game = new Game("8/8/7Q/2k5/6n1/3K4/8/8", Color.BLACK);
@@ -116,6 +117,7 @@ public class GameTest {
                 H, _6, now()));
         assertEquals(DRAW, moveResult);
     }
+
     @Test
     public void draw2() {
         game = new Game("2B5/2k5/8/8/8/8/K7/8", Color.BLACK);
@@ -123,11 +125,20 @@ public class GameTest {
                 C, _8, now()));
         assertEquals(DRAW, moveResult);
     }
+
     @Test
     public void draw3() {
         game = new Game("2R5/2k5/8/8/8/8/K7/8", Color.BLACK);
         MoveResult moveResult = game.move(new Move(King.class, Color.BLACK, C, _7,
                 C, _8, now()));
+        assertEquals(DRAW, moveResult);
+    }
+
+    @Test
+    public void draw4() {
+        game = new Game("k7/P7/8/K7/5B2/8/8/8", Color.WHITE);
+        MoveResult moveResult = game.move(new Move(King.class, Color.WHITE, A, _5,
+                A, _6, now()));
         assertEquals(DRAW, moveResult);
     }
 
