@@ -4,6 +4,7 @@ import com.example.chessgame.game.pieces.Piece;
 import com.example.chessgame.game.util.Color;
 import com.example.chessgame.game.util.GameState;
 import com.example.chessgame.game.util.Move;
+import com.example.chessgame.game.util.MoveResult;
 
 import java.time.Instant;
 import java.util.List;
@@ -26,9 +27,9 @@ public class Game {
         board = BoardFactory.board();
     }
 
-    public boolean move(Move move) {
+    public MoveResult move(Move move) {
         Piece piece = board.getPiece(move.getFrom().x, move.getFrom().y);
-        if (piece == null) return false;
+        if (piece == null) return MoveResult.BAD_MOVE;
         return piece.move(move);
     }
 

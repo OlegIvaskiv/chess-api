@@ -15,29 +15,29 @@ public class King extends Piece {
     @Override
     public void calculateAllLegalSquares() {
         legalSquares.clear();
-        if (board.moveFor() != color) {
-            legalSquares.addAll(getAllNeighboursSquares(xp, yp));
-            return;
-        }
-
         List<Point> emptySquares = getAllNeighboursSquares(xp, yp)
                 .stream()
                 .filter(p -> getPiece(p.x, p.y) == null).toList();
-
+        if (board.moveFor() != color) {
+            legalSquares.addAll(emptySquares);
+            return;
+        }
 
         List<Point> captures = getAllNeighboursSquares(xp, yp)
                 .stream()
                 .filter(p -> getPiece(p.x, p.y) != null
                         && getPiece(p.x, p.y).color != color).toList();
 
-        List<Point> attackedSquares = getAllEnemyLegalSquares();
         List<Point> squares = new ArrayList<>();
         squares.addAll(emptySquares);
         squares.addAll(captures);
-        squares = squares.stream()
-                         .filter(p -> !isNearEnemyKing(p.x, p.y))
-                         .filter(p -> !attackedSquares.contains(p))
-                         .map(p -> new Point(p.x, p.y)).toList();
+        List<Point> filtered = new ArrayList<>();
+
+        for (Point p : squares) {
+            if (!isNearEnemyKing(p.x, p.y) && !isCovered(p)) {
+                filtered.add(p);
+            }
+        }
 
         if (this.color == Color.WHITE) {
             if (castleLongPossible()) {
@@ -55,9 +55,20 @@ public class King extends Piece {
             }
         }
 
-        legalSquares.addAll(squares);
+        legalSquares.addAll(filtered);
     }
 
+
+    public boolean isCovered(Point point) {
+        List<Point> points = getAllEnemyLegalSquares(false);
+        Piece piece = getPiece(point.x, point.y);
+        if (piece != null && piece.color != this.color) {
+            board.removePiece(piece);
+            points = getAllEnemyLegalSquares(false);
+            board.addPiece(piece);
+        }
+        return points.contains(point);
+    }
 
     private boolean castleLongPossible() {
         return !kingMoved()
@@ -128,12 +139,12 @@ public class King extends Piece {
         if (this.color == Color.WHITE) {
             Point point1 = new Point(2, 7);
             Point point2 = new Point(3, 7);
-            List<Point> squares = getAllEnemyLegalSquares();
+            List<Point> squares = getAllEnemyLegalSquares(false);
             return squares.contains(point1) || squares.contains(point2);
         } else {
             Point point1 = new Point(2, 0);
             Point point2 = new Point(3, 0);
-            List<Point> squares = getAllEnemyLegalSquares();
+            List<Point> squares = getAllEnemyLegalSquares(false);
             return squares.contains(point1) || squares.contains(point2);
         }
     }
@@ -142,12 +153,12 @@ public class King extends Piece {
         if (this.color == Color.WHITE) {
             Point point1 = new Point(5, 7);
             Point point2 = new Point(6, 7);
-            List<Point> squares = getAllEnemyLegalSquares();
+            List<Point> squares = getAllEnemyLegalSquares(false);
             return squares.contains(point1) || squares.contains(point2);
         } else {
             Point point1 = new Point(5, 7);
             Point point2 = new Point(6, 7);
-            List<Point> squares = getAllEnemyLegalSquares();
+            List<Point> squares = getAllEnemyLegalSquares(false);
             return squares.contains(point1) || squares.contains(point2);
         }
     }

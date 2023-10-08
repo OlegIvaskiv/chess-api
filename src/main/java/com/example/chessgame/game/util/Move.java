@@ -12,6 +12,7 @@ public class Move {
     private final Point from;
     private final Point to;
     private final Color color;
+    private MoveResult moveResult;
 
     public Move(Class<? extends Piece> piece, Color color, File fileFrom, Row rowFrom,
                 File fileTo, Row rowTo, Instant time) {
@@ -22,4 +23,7 @@ public class Move {
         this.pieceType = piece;
     }
 
+    public void setMoveResult(MoveResult moveResult) {
+        this.moveResult = moveResult;
+    }
 }
