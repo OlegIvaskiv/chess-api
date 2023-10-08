@@ -3,7 +3,7 @@ package com.example.chessgame.game.pieces;
 import com.example.chessgame.game.Board;
 import com.example.chessgame.game.util.Color;
 
-public class Queen extends Piece {
+public class Queen extends  PromotedPiece {
     private final Bishop bishop;
     private final Rook rook;
 

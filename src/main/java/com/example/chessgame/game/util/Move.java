@@ -1,6 +1,7 @@
 package com.example.chessgame.game.util;
 
 import com.example.chessgame.game.pieces.Piece;
+import com.example.chessgame.game.pieces.PromotedPiece;
 import lombok.Getter;
 
 import java.time.Instant;
@@ -13,6 +14,7 @@ public class Move {
     private final Point to;
     private final Color color;
     private MoveResult moveResult;
+    private Class<? extends PromotedPiece> promoteType;
 
     public Move(Class<? extends Piece> piece, Color color, File fileFrom, Row rowFrom,
                 File fileTo, Row rowTo, Instant time) {
@@ -21,6 +23,12 @@ public class Move {
         this.from = new Point(fileFrom, rowFrom);
         this.to = new Point(fileTo, rowTo);
         this.pieceType = piece;
+    }
+
+    public Move(Class<? extends Piece> piece, Color color, File fileFrom, Row rowFrom,
+                File fileTo, Row rowTo, Instant time, Class<? extends PromotedPiece> promoteType) {
+        this(piece, color, fileFrom, rowFrom, fileTo, rowTo, time);
+        this.promoteType = promoteType;
     }
 
     public void setMoveResult(MoveResult moveResult) {

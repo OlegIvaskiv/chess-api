@@ -7,7 +7,7 @@ import com.example.chessgame.game.util.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Knight extends Piece {
+public class Knight extends PromotedPiece  {
     public Knight(int file, int row, Color color, Board board) {
         super(file, row, color, board);
     }

@@ -1,6 +1,7 @@
 package com.example.chessgame.game;
 
 import com.example.chessgame.game.pieces.Piece;
+import com.example.chessgame.game.pieces.PromotedPiece;
 import com.example.chessgame.game.util.Check;
 import com.example.chessgame.game.util.Color;
 import com.example.chessgame.game.util.Move;

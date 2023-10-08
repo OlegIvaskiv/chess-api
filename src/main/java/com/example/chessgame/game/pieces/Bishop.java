@@ -4,7 +4,7 @@ import com.example.chessgame.game.Board;
 import com.example.chessgame.game.util.Color;
 import com.example.chessgame.game.util.Point;
 
-public class Bishop extends Piece {
+public class Bishop extends PromotedPiece {
     public Bishop(int file, int row, Color color, Board board) {
         super(file, row, color, board);
     }

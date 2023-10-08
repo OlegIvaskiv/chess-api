@@ -13,7 +13,8 @@ public class Pawn extends Piece {
     @Override
     public void calculateAllLegalSquares() {
         legalSquares.clear();
-        enPassantChecking();
+        enPassantCheck();
+        promotingCheck();
         if (color == Color.WHITE) {
             if (yp == 6) {
                 if (getPiece(xp, yp - 2) == null) {
@@ -55,8 +56,16 @@ public class Pawn extends Piece {
         }
     }
 
+    private void promotingCheck() {
+        if (color == Color.WHITE && yp == 1 && getPiece(xp, 0) == null) {
+            legalSquares.add(new Point(xp, 0));
+        } else if (color == Color.BLACK && yp == 7 && getPiece(xp, 7) == null) {
+            legalSquares.add(new Point(xp, 7));
+        }
+    }
 
-    private void enPassantChecking() {
+
+    private void enPassantCheck() {
         Move prevMove = board.getLastMove();
         if (prevMove == null) return;
         if (color == Color.BLACK && yp == 4) {

@@ -29,7 +29,7 @@ public abstract class Piece {
 
     private boolean isLegalMove(Move move) {
         calculateAllLegalSquares();
-        if (isCheckForUs()&& this.getClass()!= King.class) {
+        if (isCheckForUs() && this.getClass() != King.class) {
             filterSafeMoves();
         }
         if (move == null || move.getPieceType() != this.getClass()) return false;
@@ -132,6 +132,12 @@ public abstract class Piece {
             board.addMove(move);
             this.xp = xp;
             this.yp = yp;
+            if (this.getClass().equals(Pawn.class) && move.getPromoteType() != null) {
+                PromotedPiece newPiece = createPromotedPiece(move.getPromoteType(), xp, yp);
+                board.addPiece(newPiece);
+                board.removePiece(this);
+            }
+
             board.toggleMoveSide();
             if (isCheckMateForEnemy()) {
                 move.setMoveResult(MoveResult.CHECK_MATE);
@@ -184,6 +190,7 @@ public abstract class Piece {
         this.yp = tempY;
         return isCheck;
     }
+
     public boolean isCheckForUs() {
         King king = getKing(color);
         List<Point> squares = getAllEnemyLegalSquares(false);
@@ -201,4 +208,17 @@ public abstract class Piece {
         board.removePiece(this);
     }
 
+    private PromotedPiece createPromotedPiece(Class<? extends PromotedPiece> promoteType, int file, int row) {
+        PromotedPiece piece = null;
+        if (promoteType.equals(Queen.class)) {
+            piece = new Queen(file, row, color, board);
+        } else if (promoteType.equals(Rook.class)) {
+            piece = new Rook(file, row, color, board);
+        } else if (promoteType.equals(Knight.class)) {
+            piece = new Knight(file, row, color, board);
+        } else if (promoteType.equals(Bishop.class)) {
+            piece = new Bishop(file, row, color, board);
+        }
+        return piece;
+    }
 }

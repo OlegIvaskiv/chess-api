@@ -142,4 +142,12 @@ public class GameTest {
         assertEquals(DRAW, moveResult);
     }
 
+    @Test
+    public void promote() {
+        game = new Game("8/6P1/1k6/8/8/8/1K6/8", Color.WHITE);
+        MoveResult moveResult = game.move(new Move(Pawn.class, Color.WHITE, G, _7,
+                G, _8, now(), Queen.class));
+        assertEquals(MADE, moveResult);
+    }
+
 }

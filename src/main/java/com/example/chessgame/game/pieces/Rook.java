@@ -4,7 +4,7 @@ import com.example.chessgame.game.Board;
 import com.example.chessgame.game.util.Color;
 import com.example.chessgame.game.util.Point;
 
-public class Rook extends Piece {
+public class Rook extends PromotedPiece {
     public Rook(int file, int row, Color color, Board board) {
         super(file, row, color, board);
     }
