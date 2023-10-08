@@ -12,7 +12,7 @@ public class Rook extends Piece {
     @Override
     public void calculateAllLegalSquares() {
         legalSquares.clear();
-        for (int i = xp; i <= 7; i++) {
+        for (int i = xp; i < 7; i++) {
             if (getPiece(i + 1, yp) == null) {
                 legalSquares.add(new Point((i + 1), yp));
             } else {
@@ -22,7 +22,7 @@ public class Rook extends Piece {
                 break;
             }
         }
-        for (int i = xp; i >= 0; i--) {
+        for (int i = xp; i > 0; i--) {
             if (getPiece(i - 1, yp) == null) {
                 legalSquares.add(new Point((i - 1), yp));
             } else {
@@ -32,7 +32,7 @@ public class Rook extends Piece {
                 break;
             }
         }
-        for (int i = yp; i <= 7; i++) {
+        for (int i = yp; i < 7; i++) {
             if (getPiece(xp, i + 1) == null) {
                 legalSquares.add(new Point(xp, (i + 1)));
             } else {
@@ -42,7 +42,7 @@ public class Rook extends Piece {
                 break;
             }
         }
-        for (int i = yp; i >= 0; i--) {
+        for (int i = yp; i > 0; i--) {
             if (getPiece(xp, i - 1) == null) {
                 legalSquares.add(new Point(xp, (i - 1)));
             } else {

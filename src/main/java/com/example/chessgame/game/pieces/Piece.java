@@ -29,7 +29,7 @@ public abstract class Piece {
 
     private boolean isLegalMove(Move move) {
         calculateAllLegalSquares();
-        if (isCheckForUs()) {
+        if (isCheckForUs()&& this.getClass()!= King.class) {
             filterSafeMoves();
         }
         if (move == null || move.getPieceType() != this.getClass()) return false;
@@ -184,7 +184,6 @@ public abstract class Piece {
         this.yp = tempY;
         return isCheck;
     }
-
     public boolean isCheckForUs() {
         King king = getKing(color);
         List<Point> squares = getAllEnemyLegalSquares(false);

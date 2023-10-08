@@ -62,10 +62,14 @@ public class King extends Piece {
     public boolean isCovered(Point point) {
         List<Point> points = getAllEnemyLegalSquares(false);
         Piece piece = getPiece(point.x, point.y);
-        if (piece != null && piece.color != this.color) {
-            board.removePiece(piece);
+        if (piece == null || piece.color != this.color) {
+            int tempX = xp;
+            int tempY = yp;
+            xp = point.x;
+            yp = point.y;
             points = getAllEnemyLegalSquares(false);
-            board.addPiece(piece);
+            xp = tempX;
+            yp = tempY;
         }
         return points.contains(point);
     }

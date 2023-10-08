@@ -123,5 +123,12 @@ public class GameTest {
                 C, _8, now()));
         assertEquals(DRAW, moveResult);
     }
+    @Test
+    public void draw3() {
+        game = new Game("2R5/2k5/8/8/8/8/K7/8", Color.BLACK);
+        MoveResult moveResult = game.move(new Move(King.class, Color.BLACK, C, _7,
+                C, _8, now()));
+        assertEquals(DRAW, moveResult);
+    }
 
 }
