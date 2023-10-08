@@ -2,7 +2,6 @@ package com.example.chessgame.game;
 
 import com.example.chessgame.game.pieces.Piece;
 import com.example.chessgame.game.util.Color;
-import com.example.chessgame.game.util.GameState;
 import com.example.chessgame.game.util.Move;
 import com.example.chessgame.game.util.MoveResult;
 
@@ -13,7 +12,6 @@ import static java.time.Instant.now;
 
 public class Game {
     private final Instant started;
-    private GameState gameState;
     private final Board board;
 
     public Game(String position, Color color) {
@@ -38,7 +36,18 @@ public class Game {
     }
 
     public String saveToPGN() {
-        return "";
+        MoveParser moveParser = new MoveParser();
+        StringBuilder result = new StringBuilder();
+        List<Move> moves = board.getAllMoves();
+        int totalMoves = moves.size();
+        int count = 1;
+        for (int i = 0; i < totalMoves; i++) {
+            Move wMove = moves.get(i);
+            result.append(moveParser.parseMove(count, wMove));
+            if (i % 2 == 0) count++;
+        }
+        return result.toString();
     }
+
 
 }

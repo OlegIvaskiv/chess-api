@@ -76,6 +76,8 @@ public class King extends Piece {
 
     private boolean castleLongPossible() {
         return !kingMoved()
+                && longRookOnPlace()
+                && kingOnPlace()
                 && castleLongAreaEmpty()
                 && !longSideRockMoved()
                 && !castleLongUnderAttack();
@@ -83,9 +85,41 @@ public class King extends Piece {
 
     private boolean castleShortPossible() {
         return !kingMoved()
+                && kingOnPlace()
+                && shortRookOnPlace()
                 && castleShortAreaEmpty()
                 && !shortSideRockMoved()
                 && !castleShortUnderAttack();
+    }
+
+    private boolean kingOnPlace() {
+        if (color == Color.WHITE) {
+            return xp == 4 && yp == 7;
+        } else {
+            return xp == 4 && yp == 0;
+        }
+    }
+
+    private boolean longRookOnPlace() {
+        Piece piece;
+        if (color == Color.WHITE) {
+            piece = getPiece(0, 7);
+            return piece != null && piece.getClass() == Rook.class;
+        } else {
+            piece = getPiece(0, 0);
+            return piece != null && piece.getClass() == Rook.class;
+        }
+    }
+
+    private boolean shortRookOnPlace() {
+        Piece piece;
+        if (color == Color.WHITE) {
+            piece = getPiece(7, 7);
+            return piece != null && piece.getClass() == Rook.class;
+        } else {
+            piece = getPiece(7, 0);
+            return piece != null && piece.getClass() == Rook.class;
+        }
     }
 
     private boolean castleLongAreaEmpty() {

@@ -1,8 +1,6 @@
 package com.example.chessgame.game;
 
 import com.example.chessgame.game.pieces.Piece;
-import com.example.chessgame.game.pieces.PromotedPiece;
-import com.example.chessgame.game.util.Check;
 import com.example.chessgame.game.util.Color;
 import com.example.chessgame.game.util.Move;
 
@@ -14,7 +12,6 @@ import static com.example.chessgame.game.util.Color.BLACK;
 import static com.example.chessgame.game.util.Color.WHITE;
 
 public class Board {
-    final Check check = new Check();
     private int checkMate = 0;
     private Color moveFor = WHITE;
     private final Stack<Move> moves = new Stack<>();
@@ -67,11 +64,4 @@ public class Board {
         moveFor = moveFor == WHITE ? BLACK : WHITE;
     }
 
-    public void checkMate() {
-        checkMate++;
-    }
-
-    public boolean isCheckMate() {
-        return checkMate > 0;
-    }
 }

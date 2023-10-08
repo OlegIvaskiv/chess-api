@@ -61,7 +61,7 @@ public abstract class Piece {
         List<Piece> enemyPieces = board.getAllPieces().stream().filter(p -> p.color != this.color).toList();
 
         if (ourPieces.size() <= 2 && enemyPieces.size() <= 2) {
-            if (ourPieces.size() == 0 && enemyPieces.size() == 0) return true;
+            if (ourPieces.size() == 1 && enemyPieces.size() == 1) return true;
             if (lightPieceAndKing(enemyPieces) && lightPieceAndKing(ourPieces)) {
                 return true;
             }
@@ -73,13 +73,18 @@ public abstract class Piece {
     }
 
     private boolean lightPieceAndKing(List<Piece> pieces) {
-        return pieces.size() == 2 && pieces.stream()
-                                           .filter(p -> !p.getClass().equals(King.class))
-                                           .anyMatch(p ->
-                                                   p.getClass().equals(Knight.class)
-                                                           || p.getClass().equals(Bishop.class));
+        if (pieces.size() == 1) {
+            return pieces.stream().anyMatch(p -> p.getClass().equals(King.class));
+        }
+        if (pieces.size() == 2) {
+            return pieces.stream()
+                         .filter(p -> !p.getClass().equals(King.class))
+                         .anyMatch(p ->
+                                 p.getClass().equals(Knight.class)
+                                         || p.getClass().equals(Bishop.class));
+        }
+        return false;
     }
-
 
     public boolean isPined() {
         if (this instanceof King) return false;
@@ -126,6 +131,7 @@ public abstract class Piece {
         if (!isPined() && isLegalMove(move) && !theSamePosition(move) && this.color == board.moveFor()) {
             if (getPiece(xp, yp) != null) {
                 if (getPiece(xp, yp).color != color) {
+                    move.setCapture();
                     getPiece(xp, yp).kill();
                 }
             }
@@ -180,12 +186,25 @@ public abstract class Piece {
     }
 
     public boolean isPreventCheck(Point point) {
-        if (this.getClass() == King.class || point == null) return false;
+        if (point == null) return false;
         int tempX = this.xp;
         int tempY = this.yp;
+        boolean isCheck;
+        if (board.getPiece(point.x, point.y) != null && board.getPiece(point.x, point.y).color != this.color) {
+            Piece tempPiece = null;
+            tempPiece = board.getPiece(point.x, point.y);
+            board.removePiece(tempPiece);
+            this.xp = point.x;
+            this.yp = point.y;
+            isCheck = !isCheckForUs();
+            this.xp = tempX;
+            this.yp = tempY;
+            board.addPiece(tempPiece);
+            return isCheck;
+        }
         this.xp = point.x;
         this.yp = point.y;
-        boolean isCheck = !isCheckForUs();
+        isCheck = !isCheckForUs();
         this.xp = tempX;
         this.yp = tempY;
         return isCheck;

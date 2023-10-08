@@ -8,6 +8,9 @@ import java.time.Instant;
 
 @Getter
 public class Move {
+    private boolean capture = false;
+    private boolean check = false;
+    private boolean checkMate = false;
     private final Instant time;
     private final Class<? extends Piece> pieceType;
     private final Point from;
@@ -33,5 +36,17 @@ public class Move {
 
     public void setMoveResult(MoveResult moveResult) {
         this.moveResult = moveResult;
+    }
+
+    public void setCapture() {
+        this.capture = true;
+    }
+
+    public void setCheck() {
+        this.check = true;
+    }
+
+    public void setCheckMate() {
+        this.checkMate = true;
     }
 }
