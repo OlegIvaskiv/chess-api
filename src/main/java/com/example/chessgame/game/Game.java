@@ -35,15 +35,45 @@ public class Game {
         return board.getAllMoves();
     }
 
+
+    /*
+    *
+[Date "2023.10.09"]
+[Round "-"]
+[White "OlehIvaskiv"]
+[Black "maximumanimal"]
+[Result "1/2-1/2"]
+[WhiteElo "1265"]
+[BlackElo "1235"]
+[TimeControl "600"]
+[EndTime "1:39:34 PDT"]
+[Termination "Game drawn - insufficient material"]
+    * */
+    //1. e4 {[%clk 0:09:56.5]} 1... c6 {[%clk 0:09:59.4]}
     public String saveToPGN() {
-        MoveParser moveParser = new MoveParser();
+        String patter = """
+                [Date "%s"]
+                [Round "%s"]
+                [White "%s"]
+                [Black "%s"]
+                [Result "%s"]
+                [WhiteElo "%d"]
+                [BlackElo "%d"]
+                [TimeControl "%d"]
+                [EndTime "%d"]
+                [%s"]
+                \n
+                \n
+                """;
+
         StringBuilder result = new StringBuilder();
+        MoveParser moveParser = new MoveParser();
         List<Move> moves = board.getAllMoves();
         int totalMoves = moves.size();
         int count = 1;
         for (int i = 0; i < totalMoves; i++) {
-            Move wMove = moves.get(i);
-            result.append(moveParser.parseMove(count, wMove));
+            Move move = moves.get(i);
+            result.append(moveParser.parseMove(count, move));
             if (i % 2 == 0) count++;
         }
         return result.toString();
